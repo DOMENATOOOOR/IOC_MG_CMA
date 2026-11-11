@@ -1,0 +1,82 @@
+# ${P} - MG-MA(n_seq)
+# ${n_seq} - 1-16
+# ${n_mag} - 1, 2
+
+# MG-MA(n_seq=1...16):CMA(n_mag=1, 2):CX-Iact:Set
+# MG-MA(n_seq=1...16):CMA(n_mag=1, 2):CY-Iact:Set
+# MG-MA(n_seq=1...16):CMA(n_mag=1, 2):CX-Ipoi:Mea
+# MG-MA(n_seq=1...16):CMA(n_mag=1, 2):CY-Ipoi:Mea
+
+record(ai, "$(P)$(n_seq):CMA$(n_mag):CX-Ipoi:Mea"){
+	field(DTYP, "Soft Channel")
+}
+
+record(ai, "$(P)$(n_seq):CMA$(n_mag):CY-Ipoi:Mea"){
+	field(DTYP, "Soft Channel")
+}
+
+record(aSub, "$(P)$(n_seq):CMA$(n_mag):CalcMeaFromCoils"){
+	
+	field(INAM, "converting_from_coils_init")
+	field(SNAM, "converting_from_coils_process")
+	
+	field(INPA, "$(P)$(n_seq):CMA$(n_mag):CCL1-Ipoi:Mea CP")
+	field(FTA, "DOUBLE")
+
+	field(INPB, "$(P)$(n_seq):CMA$(n_mag):CCL2-Ipoi:Mea CP")
+	field(FTB, "DOUBLE")
+	
+	field(OUTA, "$(P)$(n_seq):CMA$(n_mag):CX-Ipoi:Mea PP")
+	field(FTVA, "DOUBLE")
+
+	field(OUTB, "$(P)$(n_seq):CMA$(n_mag):CY-Ipoi:Mea PP")
+	field(FTVB, "DOUBLE")
+}
+
+record(ao, "$(P)$(n_seq):CMA$(n_mag):CX-Iact:Set"){
+	field(DTYP, "Soft Channel")
+	field(FLNK, "$(P)$(n_seq):CMA$(n_mag):CalcCoilsFromSet")
+}
+
+record(ao, "$(P)$(n_seq):CMA$(n_mag):CY-Iact:Set"){
+	field(DTYP, "Soft Channel")
+	field(FLNK, "$(P)$(n_seq):CMA$(n_mag):CalcCoilsFromSet")
+}
+
+record(aSub, "$(P)$(n_seq):CMA$(n_mag):CalcSetFromCoils"){
+
+	field(INAM, "converting_from_coils_init")
+        field(SNAM, "converting_from_coils_process") 
+ 
+        field(INPA, "$(P)$(n_seq):CMA$(n_mag):CCL1-Iact:Set CP")
+        field(FTA, "DOUBLE")
+
+        field(INPB, "$(P)$(n_seq):CMA$(n_mag):CCL2-Iact:Set CP")
+        field(FTB, "DOUBLE")
+
+        field(OUTA, "$(P)$(n_seq):CMA$(n_mag):CX-Iact:Set NPP")
+        field(FTVA, "DOUBLE")
+
+        field(OUTB, "$(P)$(n_seq):CMA$(n_mag):CY-Iact:Set NPP")
+        field(FTVB, "DOUBLE")
+	
+}
+
+record(aSub, "$(P)$(n_seq):CMA$(n_mag):CalcCoilsFromSet"){
+        
+        field(INAM, "converting_to_coils_init")
+        field(SNAM, "converting_to_coils_process")
+        
+        field(INPA, "$(P)$(n_seq):CMA$(n_mag):CX-Iact:Set NPP")
+        field(FTA, "DOUBLE")
+        
+        field(INPB, "$(P)$(n_seq):CMA$(n_mag):CY-Iact:Set NPP")
+        field(FTB, "DOUBLE")
+        
+        field(OUTA, "$(P)$(n_seq):CMA$(n_mag):CCL1-Iact:Set CA") 
+        field(FTVA, "DOUBLE")
+        
+        field(OUTB, "$(P)$(n_seq):CMA$(n_mag):CCL2-Iact:Set CA")
+        field(FTVB, "DOUBLE")
+	
+}
