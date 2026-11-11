@@ -28,11 +28,14 @@ static long converting_from_coils_process(aSubRecord *prec){
 	
 	double target_v = (*(double *)prec->a + *(double *)prec->b) * 0.70710678;
 	double target_h = (*(double *)prec->a - *(double *)prec->b) * 0.70710678;
-
- 	if (fabs(target_v - *(double *)prec->vala) < 1e-4 && 
-	fabs(target_h - *(double *)prec->valb) < 1e-4){
+	
+	double current_v = *(double *)prec->vala;
+	double current_h = *(double *)prec->valb;
+	
+ 	/*if (fabs(target_v - current_v) < 1e-4 && 
+	fabs(target_h - current_h) < 1e-4){
 		return 0;
-	}
+	}*/
 	
         *(double *)prec->vala = target_v;
         *(double *)prec->valb = target_h;
@@ -54,10 +57,10 @@ static long converting_to_coils_process(aSubRecord *prec){
 	double target_c1 = (*(double *)prec->a + *(double *)prec->b) * 0.70710678;
 	double target_c2 = (*(double *)prec->a - *(double *)prec->b) * 0.70710678;
 	
-	if (fabs(target_c1 - *(double *)prec->vala) < 1e-4 &&
+	/*if (fabs(target_c1 - *(double *)prec->vala) < 1e-4 &&
         fabs(target_c2 - *(double *)prec->valb) < 1e-4){
                 return 0;
-        }
+        }*/
 
         *(double *)prec->vala = target_c1;
         *(double *)prec->valb = target_c2;
